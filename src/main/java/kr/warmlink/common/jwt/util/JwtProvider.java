@@ -42,10 +42,8 @@ public class JwtProvider {
 
     public boolean validateToken(String token) {
         try {
-            if (!token.startsWith(BEARER)) {
+            if (token == null) {
                 return false;
-            } else {
-                token = token.split(" ")[1].trim();
             }
             Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(jwtProperties.getSecret().getBytes()).build().parseClaimsJws(token);
             return !claims.getBody().getExpiration().before(new Date());
@@ -55,7 +53,11 @@ public class JwtProvider {
     }
 
     public String resolveToken(HttpServletRequest request) {
-        return request.getHeader(AUTH_HEADER);
+        String token = request.getHeader("Authorization");
+        if (token != null && token.startsWith("Bearer ")) {
+            return token.substring(7);
+        }
+        return null;
     }
 
     public String getEmail(String token) {
