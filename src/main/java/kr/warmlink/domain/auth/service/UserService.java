@@ -34,4 +34,9 @@ public class UserService {
         return message;
     }
 
+    @Transactional
+    public User read(String email) {
+        return userRepository.findByEmail(email).orElse(null);
+    }
+
 }
