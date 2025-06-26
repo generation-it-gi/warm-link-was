@@ -92,4 +92,14 @@ public class ArticleService {
 
         return ArticleDto.DetailResponse.from(article, article.getUser());
     }
+
+    @Transactional
+    public List<ArticleDto.SearchResponse> search(HttpServletRequest request, String keyword) {
+        String accessToken = jwtProvider.resolveToken(request);
+        String email = jwtProvider.getEmail(accessToken);
+
+        List<Article> result = articleRepository.findByKeyword(keyword);
+
+        return ArticleDto.SearchResponse.from(result);
+    }
 }
