@@ -43,4 +43,10 @@ public class ArticleController implements ArticleApi {
         return ResponseEntity.ok(articleService.delete(request, id));
     }
 
+    @Override
+    @GetMapping("/{id}")
+    public ResponseEntity<?> detail(HttpServletRequest request, Long id) {
+        return ResponseEntity.ok(articleService.detail(request, id));
+    }
+
 }
