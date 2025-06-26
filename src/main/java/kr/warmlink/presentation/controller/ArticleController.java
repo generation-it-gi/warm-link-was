@@ -49,4 +49,9 @@ public class ArticleController implements ArticleApi {
         return ResponseEntity.ok(articleService.detail(request, id));
     }
 
+    @Override
+    @GetMapping("/search")
+    public ResponseEntity<?> searchKeyword(HttpServletRequest request, String keyword) {
+        return ResponseEntity.ok(articleService.search(request, keyword));
+    }
 }

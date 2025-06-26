@@ -9,6 +9,7 @@ import kr.warmlink.application.article.dto.ArticleDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Tag(name = "[판매글 관련 API]", description = "사용자 판매글 관련 API")
 public interface ArticleApi {
@@ -46,5 +47,12 @@ public interface ArticleApi {
             @ApiResponse(responseCode = "400", description = "판매글 세부 조회 실패")
     })
     ResponseEntity<?> detail(HttpServletRequest request, @PathVariable Long id);
+
+    @Operation(summary = "판매글 키워드 검색", description = "특정 키워드를 검색했을 때, 게시글 목록 조회를 위한 API")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "판매글 검색 성공"),
+            @ApiResponse(responseCode = "400", description = "판매글 검색 실패")
+    })
+    ResponseEntity<?> searchKeyword(HttpServletRequest request, @RequestParam String keyword);
 
 }
