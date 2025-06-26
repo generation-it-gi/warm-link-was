@@ -89,4 +89,34 @@ public class ArticleDto {
                     .build();
         }
     }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    @Schema(name = "ArticleDto.SearchResponse", description = "검색 결과 반환을 위한 응답 DTO")
+    public static class SearchResponse {
+        @Schema(description = "게시글 id", example = "1")
+        private Long id;
+
+        @Schema(description = "게시글 제목", example = "초상화 그려드립니다.")
+        private String title;
+
+        @Schema(description = "작성자", example = "홍길동")
+        private String name;
+
+        @Schema(description = "작성일", example = "2025-06-26")
+        private LocalDateTime createdAt;
+
+        public static List<SearchResponse> from(List<Article> articles) {
+            return articles.stream()
+                    .filter(article -> article.isDeleted() == false)
+                    .map(article -> SearchResponse.builder()
+                            .id(article.getId())
+                            .name(article.getUser().getName())
+                            .title(article.getTitle())
+                            .createdAt(article.getCreatedAt())
+                            .build())
+                    .collect(Collectors.toUnmodifiableList());
+        }
+    }
 }
