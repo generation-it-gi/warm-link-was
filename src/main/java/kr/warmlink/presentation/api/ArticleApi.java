@@ -40,4 +40,11 @@ public interface ArticleApi {
     })
     ResponseEntity<?> delete(HttpServletRequest request, @PathVariable Long id);
 
+    @Operation(summary = "판매글 세부 조회", description = "사용자의 판매 게시글을 내용까지 조회하기 위한 API")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "판매글 세부 조회 성공"),
+            @ApiResponse(responseCode = "400", description = "판매글 세부 조회 실패")
+    })
+    ResponseEntity<?> detail(HttpServletRequest request, @PathVariable Long id);
+
 }
