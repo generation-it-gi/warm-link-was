@@ -83,4 +83,13 @@ public class ArticleService {
         return ArticleDto.Response.of(message);
     }
 
+    @Transactional
+    public ArticleDto.DetailResponse detail(HttpServletRequest request, Long id) {
+        String accessToken = jwtProvider.resolveToken(request);
+        String email = jwtProvider.getEmail(accessToken);
+
+        Article article = read(id);
+
+        return ArticleDto.DetailResponse.from(article, article.getUser());
+    }
 }
